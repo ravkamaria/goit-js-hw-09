@@ -1,7 +1,7 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-const flatpickr = require('flatpickr');
+// const flatpickr = require('flatpickr');
 
 const btnStart = document.querySelector('button[data-start]');
 const input = document.querySelector('#datetime-picker');
@@ -16,7 +16,7 @@ btnStart.setAttribute('disabled', '');
 
 const now = new Date();
 let timer = 0;
-flatpickr('#datetime-picker', {
+flatpickr(input, {
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
