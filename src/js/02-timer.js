@@ -4,7 +4,7 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 const flatpickr = require('flatpickr');
 
 const btnStart = document.querySelector('button[data-start]');
-const input = document.querySelector("input");
+const input = document.querySelector('input');
 const timerValue = {
   days: document.querySelector('span[data-days]'),
   hours: document.querySelector('span[data-hours]'),
@@ -15,7 +15,7 @@ btnStart.addEventListener('click', handlerStart);
 btnStart.setAttribute('disabled', '');
 
 const now = new Date();
-let timer = 86369724;
+let timer = 0;
 flatpickr('#datetime-picker', {
   enableTime: true,
   time_24hr: true,
@@ -26,23 +26,22 @@ flatpickr('#datetime-picker', {
     timer = date - now;
     if (timer <= 0) {
       Notify.failure('Please choose a date in the future');
+    } else {
+      btnStart.removeAttribute('disabled');
+      localStorage.setItem('Choose-Date', 'timer');
     }
-    btnStart.removeAttribute('disabled');
-    // console.log(timer)
-    return timer;
   },
 });
 
-console.log(timer)
+localStorage.getItem('Choose-Date');
 function handlerStart() {
- const startTimer = setInterval(() => {
-  timer -= 1000;
+  const startTimer = setInterval(() => {
+    timer -= 1000;
     const timerArr = convertMs(timer);
-    console.log(timer)
     addLeadingZero(timerArr);
-    if(timer < 1000){
-    clearInterval(startTimer);
-  }
+    if (timer < 1000) {
+      clearInterval(startTimer);
+    }
   }, 1000);
   btnStart.setAttribute('disabled', '');
   input.setAttribute('disabled', '');
@@ -64,7 +63,7 @@ function convertMs(ms) {
 
 function addLeadingZero({ days, hours, minutes, seconds }) {
   timerValue.days.textContent = days;
-  timerValue.hours.textContent = hours.toString().padStart(2, "0");
-  timerValue.minutes.textContent = minutes.toString().padStart(2, "0");
-  timerValue.seconds.textContent = seconds.toString().padStart(2, "0");
+  timerValue.hours.textContent = hours.toString().padStart(2, '0');
+  timerValue.minutes.textContent = minutes.toString().padStart(2, '0');
+  timerValue.seconds.textContent = seconds.toString().padStart(2, '0');
 }
